@@ -217,13 +217,10 @@ export const Home = () => {
                     </div>
                   }
                 refreshFunction={refreshPost}
-                pullDownToRefresh={true}
-                pullDownToRefreshThreshold={50}
+                pullDownToRefresh
+                pullDownToRefreshThreshold={100}
                 pullDownToRefreshContent={
                     <h3 style={{ textAlign: 'center' }}>&#8595; Tarik Untuk Mensegarkan</h3>
-                }
-                releaseToRefreshContent={
-                    <h3 style={{ textAlign: 'center' }}>&#8593; Lepas Mensegarkan</h3>
                 }
             >
                 {postData.map((val, i) => (

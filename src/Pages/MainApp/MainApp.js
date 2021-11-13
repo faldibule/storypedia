@@ -31,7 +31,7 @@ const MainApp = () => {
                     <Col md={3} >
                         <Profil />
                     </Col>
-                    <Col md={9}>
+                    <Col md={8}>
                         <Switch>
                             <Route exact path="/home" component={Home}/>
                             <Route exact path="/home/detail/:uuid" component={Detail}/>
