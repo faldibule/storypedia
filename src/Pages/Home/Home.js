@@ -26,7 +26,6 @@ export const Home = () => {
     post.current = watch('post')
 
     const getMoreData = () => {
-        let newData = [...postData];
         axios.post(`${window.env.API_URL}post/find`, {
             page,
         })
@@ -36,12 +35,23 @@ export const Home = () => {
                     }else{
                         setPage(page => page + 1)
                     }
-                    newData = [...postData, ...res.data.posts.data]
+                    const data = res.data.posts.data
+                    const newData =  postData.filter(item => {
+                        if (!data.some(item1=>item._id === item1._id)) {
+                          return item
+                        }
+                      }).concat(data)
                     setPostData(newData)
                 })
                 .catch(err => {
-                    console.log(err.response)
+                    console.log(err)
                 })
+    }
+
+    const refreshPost = () => {
+        setPostData([])
+        setMore(true)
+        setPage(2)
     }
 
     const getData = () =>{
@@ -49,9 +59,11 @@ export const Home = () => {
             page: 1,
         })
             .then(res => {
-                postData.shift()
-                postData.shift()
-                const newData = [...res.data.posts.data, ...postData]
+                const newData =  res.data.posts.data.filter(item => {
+                    if (!postData.some(item1=>item._id === item1._id)) {
+                      return item
+                    }
+                  }).concat(postData)
                 setPostData(newData)
             })
             .catch(err => {
@@ -79,12 +91,6 @@ export const Home = () => {
             mounted = false
         }
     }, [postData])
-
-    const refreshPost = () => {
-        setPostData([])
-        setMore(true)
-        setPage(2)
-    }
 
     if(!userState.isAuth){
         localStorage.clear()
@@ -136,6 +142,11 @@ export const Home = () => {
             })
             getData()
             setValue('post', '')
+            setMax(0)
+            setImage({
+                image_file: null,
+                image_preview: ''
+            })
             
         })
         .catch(err => {
