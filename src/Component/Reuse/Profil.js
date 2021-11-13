@@ -11,7 +11,7 @@ const Profil = () => {
     }
 
     return (
-        <div className="position-sticky" style={{ top: 65 }}>
+        <div>
             <Card className="mb-2 shadow-sm">
                 <Card.Body className="d-flex flex-column ">
                     <div className="d-flex align-items-center">
