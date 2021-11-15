@@ -3,10 +3,11 @@ import { Card } from 'react-bootstrap'
 import { DoorOpenFill, HouseDoor, JournalText, Person } from 'react-bootstrap-icons'
 import { Link, Redirect } from 'react-router-dom'
 import { UserContext } from '../../Context/UserContext'
-import { useHomeDispatch } from '../../Reducer/HomeReducer'
+import { useHomeDispatch, useTrackedState } from '../../Reducer/HomeReducer'
 
 const Profil = () => {
     const homeDispatch = useHomeDispatch();
+    const homeState = useTrackedState();
     const {userState, userDispatch} = useContext(UserContext);
     const handleClick = () =>{
         return userDispatch({type: 'Logout'})
@@ -22,7 +23,7 @@ const Profil = () => {
                     <hr />
                     <div className="d-flex flex-md-column justify-content-between mt-2">
                         <br />
-                        {window.location.pathname == '/home' ? 
+                        {homeState.pathname == '/home' ? 
                             <span style={{ cursor:'pointer' }} className="text-dark text-decoration-none me-2" onClick={() => homeDispatch({type: 'REFRESH'})}><HouseDoor size={30} /> Home </span>
                         :
                             <Link className="text-dark text-decoration-none me-2" to="/home"> <HouseDoor size={30} /> Home</Link>

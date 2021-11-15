@@ -2,20 +2,28 @@ import axios from 'axios';
 import React, { useState, useEffect } from 'react'
 import { Spinner } from 'react-bootstrap';
 import CardPost from '../../Component/Atom/CardPost';
+import { useHomeDispatch, useTrackedState } from '../../Reducer/HomeReducer';
 
 const Detail = (props) => {
     const [card, setCard] = useState([]);
-
+    const homeDispatch = useHomeDispatch()
+    const homeState = useTrackedState();
     useEffect(() => {
         let mounted = true;
         const raw_uuid = props.match.params.uuid;
-        console.log(raw_uuid)
+        console.log(homeState.pathname)
         const uuid = raw_uuid.substring(0, 24);
         if(uuid){
             axios.post(`${window.env.API_URL}post/detail`, {
                 postId: uuid
             }).then(res => {
                 if(mounted){
+                    homeDispatch({
+                        type: 'SET_PATH',
+                        payload: {
+                            pathname: '/detail'
+                        }
+                    })
                     setCard(res.data.post)
                 }
             }).catch(err => {

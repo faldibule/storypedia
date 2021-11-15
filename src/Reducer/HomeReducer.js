@@ -6,6 +6,7 @@ export const HomeReducer = {
         postData: [],
         page: 2,
         more: true,
+        pathname: '/home'
     },
 
     reducer: (state, action) => {
@@ -46,6 +47,12 @@ export const HomeReducer = {
                 return{
                     ...state,
                     page: state.page + 1
+                }
+            }
+            case 'SET_PATH': {
+                return{
+                    ...state,
+                    pathname: action.payload.pathname
                 }
             }
 

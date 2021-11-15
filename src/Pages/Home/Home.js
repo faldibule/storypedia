@@ -68,6 +68,12 @@ export const Home = () => {
 
     useEffect(() => {
         let mounted = true
+        homeDispatch({
+            type: 'SET_PATH',
+            payload: {
+                pathname: '/home'
+            }
+        })
         if(homeState.postData.length == 0){
             axios.post(`${window.env.API_URL}post/find`, {
                 page: 1,
