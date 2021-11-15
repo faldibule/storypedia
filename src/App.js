@@ -1,6 +1,5 @@
 import './App.css';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { Home } from './Pages/Home/Home';
 import { useReducer } from 'react';
 import { UserContext } from './Context/UserContext'
 import { UserReducer } from './Reducer/UserReducer'
@@ -10,7 +9,6 @@ import Register from './Pages/Auth/Register';
 import Welcome from './Pages/Welcome';
 import NotFoundPage from './Pages/NotFoundPage';
 import MainApp from './Pages/MainApp/MainApp';
-
 
 function App() {
   const [state, dispatch] = useReducer(UserReducer.reducer, UserReducer.initialize)

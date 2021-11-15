@@ -9,7 +9,7 @@ export const NavbarComponent = () => {
 
     if(userState.isAuth){
         return (
-                <Navbar sticky="top" bg="warning" variant="dark" expand="lg">
+                <Navbar bg="warning" variant="dark" expand="lg">
                     <Container>
                         <NavLink className="navbar-brand" to={{ pathname: '/' }}>
                             Storypedia

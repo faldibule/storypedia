@@ -21,6 +21,8 @@
     "react-router": "^5.2.1",
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
+    "react-tracked": "^1.7.5",
+    "scheduler": "^0.20.2",
     "web-vitals": "^1.1.2"
   },
   "scripts": {
@@ -48,6 +50,8 @@
     ]
   },
   "react-dotenv": {
-    "whitelist": ["API_URL"]
+    "whitelist": [
+      "API_URL"
+    ]
   }
 }

@@ -1,19 +1,20 @@
-import React, { useContext, useState, useRef, useEffect } from 'react'
+import React, { useContext, useState, useEffect, useRef } from 'react'
 import { Form, Button, Image, Spinner } from 'react-bootstrap'
 import { ImageFill } from 'react-bootstrap-icons'
 import { useForm } from 'react-hook-form'
-import { Redirect, useHistory } from 'react-router'
+import { Redirect } from 'react-router'
 import { UserContext } from '../../Context/UserContext'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import axios from 'axios'
 import CardPost from '../../Component/Atom/CardPost'
 import './style.css'
+import { useHomeDispatch, useTrackedState } from '../../Reducer/HomeReducer'
+
 
 export const Home = () => {
     const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm();
-    const [postData, setPostData] = useState([]);
-    const [more, setMore] = useState(true)
-    const [page, setPage] = useState(2);
+    const homeDispatch = useHomeDispatch()
+    const homeState = useTrackedState()
     const [max, setMax] = useState(0);
     const [disabled, setDisabled] = useState(true);
     const [image, setImage] = useState({
@@ -21,50 +22,44 @@ export const Home = () => {
         image_preview: ''
     })
     const [display, setDisplay] = useState({button: 'inline', loading: 'none'})
-    const {userState, userDispatch} = useContext(UserContext)
-    const post = useRef({})
-    post.current = watch('post')
+    const {userState} = useContext(UserContext)
 
     const getMoreData = () => {
         axios.post(`${window.env.API_URL}post/find`, {
-            page,
+            page: homeState.page,
         })
                 .then(res => {
-                    if(page == res.data.posts.totalPage){
-                        setMore(false)
+                    if(homeState.page == res.data.posts.totalPage){
+                        homeDispatch({type: 'NOT_HAS_MORE'})
                     }else{
-                        setPage(page => page + 1)
+                        homeDispatch({type: 'SET_PAGE'})
                     }
-                    const data = res.data.posts.data
-                    const newData =  postData.filter(item => {
-                        if (!data.some(item1=>item._id === item1._id)) {
-                          return item
+                    homeDispatch({
+                        type: 'SET_POST_DATA',
+                        payload:{
+                            data1: homeState.postData,
+                            data2: res.data.posts.data
                         }
-                      }).concat(data)
-                    setPostData(newData)
+                    })
                 })
                 .catch(err => {
                     console.log(err)
                 })
     }
 
-    const refreshPost = () => {
-        setPostData([])
-        setMore(true)
-        setPage(2)
-    }
 
     const getData = () =>{
         axios.post(`${window.env.API_URL}post/find`, {
             page: 1,
         })
             .then(res => {
-                const newData =  res.data.posts.data.filter(item => {
-                    if (!postData.some(item1=>item._id === item1._id)) {
-                      return item
+                homeDispatch({
+                    type: 'SET_POST_DATA',
+                    payload: {
+                        data1: res.data.posts.data,
+                        data2: homeState.postData
                     }
-                  }).concat(postData)
-                setPostData(newData)
+                })
             })
             .catch(err => {
                 console.log(err.response)
@@ -73,14 +68,18 @@ export const Home = () => {
 
     useEffect(() => {
         let mounted = true
-        if(postData.length == 0){
+        if(homeState.postData.length == 0){
             axios.post(`${window.env.API_URL}post/find`, {
                 page: 1,
             })
             .then(res => {
                 if(mounted){
-                    const newData = [...res.data.posts.data, ...postData]
-                    setPostData(newData)
+                    homeDispatch({
+                        type: 'SET_POST_DATA_FIRST',
+                        payload: {
+                            data: res.data.posts.data,
+                        }
+                    })
                 }
             })
             .catch(err => {
@@ -90,7 +89,7 @@ export const Home = () => {
         return () => { 
             mounted = false
         }
-    }, [postData])
+    }, [homeState.postData])
 
     if(!userState.isAuth){
         localStorage.clear()
@@ -202,9 +201,9 @@ export const Home = () => {
             </Form>
             <div>
             <InfiniteScroll
-                dataLength={postData.length}
+                dataLength={homeState.postData.length}
                 next={getMoreData}
-                hasMore={more}
+                hasMore={homeState.more}
                 loader={
                     <div className="text-center">
                         <Spinner animation="border" variant="warning" size="sm" />
@@ -216,14 +215,9 @@ export const Home = () => {
                       <b>Anda Sudah Mencapai Dasar Dari Post!</b>
                     </div>
                   }
-                refreshFunction={refreshPost}
-                pullDownToRefresh
-                pullDownToRefreshThreshold={100}
-                pullDownToRefreshContent={
-                    <h3 style={{ textAlign: 'center' }}>&#8595; Tarik Untuk Mensegarkan</h3>
-                }
+                
             >
-                {postData.map((val, i) => (
+                {homeState.postData.map((val, i) => (
                     <div key={`${val._id}${Date.now().toString()}`}>
                             <CardPost val={val} />
                     </div>
