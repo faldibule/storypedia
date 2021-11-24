@@ -84,6 +84,9 @@ const Profil = (props) => {
                             data: res.data.posts.data,
                         }
                     })
+                    if(res.data.posts.totalPage === 1){
+                        homeDispatch({type: 'NOT_HAS_MORE'})
+                    }
                 }
             })
             .catch(err => {
