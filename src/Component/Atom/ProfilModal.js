@@ -9,18 +9,16 @@ const ProfilModal = (props) => {
         button: 'block',
         loading: 'none'
     })
-    const [form, setForm] = useState({
-        nama: '', 
-        email: '', 
-        username: ''
-    })
+    
 
-    const onSubmit = (data) =>{
+    const onSubmit = (data) => {
+        let isEmailSame = props.datauser.email === data.email
+        let isUsernameSame = props.datauser.username === data.username
         setDisplay({
             button: 'none',
             loading: 'block'
         })
-        console.log(data)
+        console.log(isEmailSame, isUsernameSame)
         setDisplay({
             button: 'block',
             loading: 'none'
