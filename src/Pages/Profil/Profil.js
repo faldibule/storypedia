@@ -4,6 +4,7 @@ import { Card, Image, Spinner, Button } from 'react-bootstrap'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { Redirect } from 'react-router'
 import CardPost from '../../Component/Atom/CardPost'
+import ProfilModal from '../../Component/Atom/ProfilModal'
 import { UserContext } from '../../Context/UserContext'
 import { useHomeDispatch, useTrackedState } from '../../Reducer/HomeReducer'
 
@@ -13,6 +14,12 @@ const Profil = (props) => {
     const homeState = useTrackedState()
     const [profilData, setProfilData] = useState({})
     const [display, setDisplay] = useState({post: 'none'})
+    
+    //modal state
+    const [modal, setModal] = useState({
+        profil: false,
+        password: false,
+    })
 
     const getMoreData = () => {
         axios.post(`${window.env.API_URL}post/findByUserId`, {
@@ -115,19 +122,26 @@ const Profil = (props) => {
         <div style={{ height: '90vh', overflow: "auto"}} id="scrollableDiv">
             {JSON.stringify(profilData) !== '{}' ? 
             <Card>
-                <Card.Header className="d-flex">
-                    <Image style={{ width: '50px', objectFit: 'cover', objectPosition: 'center' }} className="rounded-circle me-2" variant="top" src={profilData.image} />
+                <Card.Header className="text-center d-flex justify-content-center flex-column align-items-center">
+                    <Image style={{ width: '120px', objectFit: 'cover', objectPosition: 'center' }} className="img-fluid rounded-circle me-2" variant="top" src={profilData.image} />
                     <span>
-                        <small>{profilData.username}</small> <br />
-                        <small>{profilData.email}</small>
+                        <h5>{profilData.username}</h5>
+                        <h5 className="text-secondary">{profilData.email}</h5>
                     </span>
                 </Card.Header>
-                <Card.Footer>
+                <Card.Footer className="d-flex justify-content-evenly">
                     {display.post === 'none' ? 
-                        <Button onClick={handleDisplay}> Lihat {profilData.username} Post</Button>
+                        <Button className="text-light btn-sm mx-1" variant='warning' onClick={handleDisplay}> Lihat {profilData.username} Post</Button>
                     :
-                        <Button onClick={handleDisplay}> Sembunyikan {profilData.username} Post</Button>
+                        <Button className="text-light btn-sm mx-1" variant='warning' onClick={handleDisplay}> Sembunyikan {profilData.username} Post</Button>
 
+                    }
+                    {profilData.username === userState.username &&
+                    <> 
+                        <Button className="text-light btn-sm mx-1" variant='warning' onClick={() => setModal({...modal, profil: true})}> Edit Profil</Button>
+                        <Button className="text-light btn-sm mx-1" variant='warning' onClick={() => setModal({...modal, password: true})}> Ganti Password</Button>
+                        <Button className="text-light btn-sm mx-1" variant='warning'> Ganti Foto Profil</Button>
+                    </>
                     }
                 </Card.Footer>
 
@@ -137,6 +151,11 @@ const Profil = (props) => {
                 <Spinner animation="border" variant="warning" size="sm" />
             </div>
             }
+
+            {/* modal */}
+            <ProfilModal datauser={profilData} show={modal.profil} onHide={() => setModal({...modal, profil: false})} />
+
+            {/* scroll */}
             <div style={{display: display.post}}>
                 <InfiniteScroll
                     dataLength={homeState.postData.length}
