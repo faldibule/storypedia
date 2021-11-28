@@ -9,7 +9,7 @@ import axios from 'axios'
 import CardPost from '../../Component/Atom/CardPost'
 import './style.css'
 import { useHomeDispatch, useTrackedState } from '../../Reducer/HomeReducer'
-
+import jwtDecode from 'jwt-decode'
 
 export const Home = () => {
     const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm();
@@ -22,7 +22,7 @@ export const Home = () => {
         image_preview: ''
     })
     const [display, setDisplay] = useState({button: 'inline', loading: 'none'})
-    const {userState} = useContext(UserContext)
+    const {userState, userDispatch} = useContext(UserContext)
 
     const getMoreData = () => {
         axios.post(`${window.env.API_URL}post/find`, {
@@ -65,6 +65,36 @@ export const Home = () => {
                 console.log(err.response)
             })
     }
+
+    useEffect(() => {
+        let mounted = true;
+        const token = userState.token
+        const decode = jwtDecode(token)
+        if(decode.username){
+            axios.post(`${window.env.API_URL}auth/profil`, {
+                username: decode.username,
+            })
+            .then(res => {
+                if(mounted){
+                    userDispatch({
+                        type: 'SET_USER_DATA', 
+                        payload:{
+                            userId: res.data.user[0].id,
+                            image: res.data.user[0].image,
+                            image_id: res.data.user[0].image_id,
+                            nama: res.data.user[0].nama,
+                            username: res.data.user[0].username,
+                            email: res.data.user[0].email,
+                            role: res.data.user[0].role
+                        }
+                    })
+                }
+
+            })
+        }
+
+        return () => mounted = false;
+    }, [userState.token])
 
     useEffect(() => {
         let mounted = true
@@ -163,8 +193,6 @@ export const Home = () => {
         })
         
     }
-
-    
 
     return (
         <div className="noselect" id="scrollableDiv" style={{ height: '90vh', overflow: "auto"}}>

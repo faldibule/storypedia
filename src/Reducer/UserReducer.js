@@ -13,22 +13,32 @@ export const UserReducer = {
 
     reducer: (state, action) => {
         switch(action.type){
-            case 'Login' : {
-                localStorage.setItem('userToken', JSON.stringify(action.payload.token))
+            case 'SET_USER_DATA' : {
                 return {
-                    isAuth: true,
+                    ...state,
                     userId: action.payload.userId,
                     image: action.payload.image,
                     image_id: action.payload.image_id,
                     nama: action.payload.nama,
                     username: action.payload.username,
                     email: action.payload.email,
-                    role: action.payload.role,
-                    token: action.payload.token   
+                    role: action.payload.role
+                }
+            }
+
+            case 'Login' : {
+                if(!sessionStorage.getItem('userToken')){
+                    sessionStorage.setItem('userToken', JSON.stringify(action.payload.token))
+                }
+                return {
+                    ...state,
+                    isAuth: true,
+                    token: action.payload.token || sessionStorage.getItem('userToken')  
                 } 
             }
             case 'Logout': {
                 localStorage.clear()
+                sessionStorage.removeItem('userToken')
                 return {
                     userId: null,
                     image: null,

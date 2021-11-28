@@ -1,6 +1,7 @@
 import axios from 'axios'
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { Col, Container, Row, Button, Form, Spinner, Alert, Image } from 'react-bootstrap'
+import { Redirect } from 'react-router'
 import { UserContext } from '../../Context/UserContext'
 
 import LoginImage from '../../Images/svg/login.svg'
@@ -12,6 +13,25 @@ export const Login = (props) => {
     const [alert, setAlert] = useState({isError: 'none'})
     const [message, setMessage] = useState({isError: ''})
     const [display, setDisplay] = useState({button: 'block', loading: 'none'})
+    
+    useEffect(() => {
+        let mounted = true;
+        if(sessionStorage.getItem('userToken')){
+            if(mounted){
+                userDispatch({
+                    type: 'Login',
+                    payload: {
+                        token: sessionStorage.getItem('userToken'),
+                        isAuth: true
+                    }
+                })
+                props.history.push('/home')
+            }
+        }
+        return () => {
+            mounted = false
+        }
+    }, [sessionStorage.getItem('userToken')])
 
     const handleChange = (e) =>{
         setForm({
@@ -37,13 +57,6 @@ export const Login = (props) => {
                         userDispatch({
                             type: 'Login',
                             payload: {
-                                userId: res.data.data._id,
-                                image: res.data.data.image,
-                                image_id: res.data.data.image_id,
-                                nama: res.data.data.nama,
-                                username: res.data.data.username,
-                                email: res.data.data.email,
-                                role: res.data.data.role,
                                 token: res.data.token,
                                 isAuth: true
                             }
@@ -67,7 +80,6 @@ export const Login = (props) => {
                 })
 
     }
-
 
     return (
         <Container className="mt-3" style={{ overflowY: 'auto', height: '100vh' }}>

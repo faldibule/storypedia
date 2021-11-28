@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { Card } from 'react-bootstrap'
+import { Card, Spinner } from 'react-bootstrap'
 import { DoorOpenFill, HouseDoor, JournalText, Person } from 'react-bootstrap-icons'
 import { Link, Redirect } from 'react-router-dom'
 import { UserContext } from '../../Context/UserContext'
@@ -12,6 +12,13 @@ const Navigator = () => {
     const handleClick = () =>{
         return userDispatch({type: 'Logout'})
     }
+    if(!userState.username){
+        return (
+         <div className="text-center mt-5">
+             <Spinner animation="border" variant="warning" size="sm" />
+         </div>
+        )
+     }
     return (
         <div>
             <Card className="mb-2 shadow-sm">
