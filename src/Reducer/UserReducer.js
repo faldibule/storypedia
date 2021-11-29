@@ -26,6 +26,23 @@ export const UserReducer = {
                 }
             }
 
+            case 'EDIT_PROFIL' : {
+                return {
+                    ...state,
+                    nama: action.payload.nama,
+                    username: action.payload.username,
+                    email: action.payload.email,
+                }
+            }
+
+            case 'EDIT_FOTO': {
+                return {
+                    ...state,
+                    image: action.payload.image,
+                    image_id: action.payload.image_id,
+                }
+            }
+
             case 'Login' : {
                 if(!sessionStorage.getItem('userToken')){
                     sessionStorage.setItem('userToken', JSON.stringify(action.payload.token))

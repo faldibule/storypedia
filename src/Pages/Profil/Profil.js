@@ -1,9 +1,11 @@
 import axios from 'axios'
 import React, { useContext, useEffect, useState } from 'react'
-import { Card, Image, Spinner, Button } from 'react-bootstrap'
+import { Card, Image, Spinner, Button, Form } from 'react-bootstrap'
+import { PersonBoundingBox } from 'react-bootstrap-icons'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { Redirect } from 'react-router'
 import CardPost from '../../Component/Atom/CardPost'
+import PasswordModal from '../../Component/Atom/PasswordModal'
 import ProfilModal from '../../Component/Atom/ProfilModal'
 import { UserContext } from '../../Context/UserContext'
 import { useHomeDispatch, useTrackedState } from '../../Reducer/HomeReducer'
@@ -14,7 +16,13 @@ const Profil = (props) => {
     const homeState = useTrackedState()
     const [profilData, setProfilData] = useState({})
     const [display, setDisplay] = useState({post: 'none'})
-    
+    const [message, setMessage] = useState({
+        image: {
+            label : 'Ganti Foto',
+            disabled: false
+        }
+    })
+
     //modal state
     const [modal, setModal] = useState({
         profil: false,
@@ -117,19 +125,52 @@ const Profil = (props) => {
             setDisplay({post: 'none'})
         }
     }
+
+    const imageHandle = (e) => {
+        setMessage({
+            image: {
+                label : 'Loading',
+                disabled: true
+            }
+        })
+        let image_file = e.target.files[0];
+        const formData = new FormData()
+        formData.append('image', image_file)
+        formData.append('username', profilData.username)
+        axios.post(`${window.env.API_URL}auth/edit_foto_profil`, formData)
+                .then(res => {
+                    setMessage({
+                        image: {
+                            label : 'Ganti Foto',
+                            disabled: false
+                        }
+                    })
+                    console.log(res.data)
+                })
+                .catch(err => {
+                    setMessage({
+                        image: {
+                            label : 'Ganti Foto',
+                            disabled: false
+                        }
+                    })
+                    console.log(err.response)
+                })
+    }
     
     return (
         <div style={{ height: '90vh', overflow: "auto"}} id="scrollableDiv">
             {JSON.stringify(profilData) !== '{}' ? 
             <Card>
                 <Card.Header className="text-center d-flex justify-content-center flex-column align-items-center">
-                    <Image style={{ width: '120px', objectFit: 'cover', objectPosition: 'center' }} className="img-fluid rounded-circle me-2" variant="top" src={profilData.image} />
+                    <Image style={{ width: '120px', height: '120px', objectFit: 'cover', objectPosition: 'center' }} className="img-fluid rounded-circle me-2" variant="top" src={profilData.image} />
                     <span>
                         <h5>{profilData.username}</h5>
                         <h5 className="text-secondary">{profilData.email}</h5>
                     </span>
                 </Card.Header>
-                <Card.Footer className="d-flex justify-content-evenly">
+                <Card.Footer className="d-flex justify-content-center">
+                    <Card.Body className="text-center">
                     {display.post === 'none' ? 
                         <Button className="text-light btn-sm mx-1" variant='warning' onClick={handleDisplay}> Lihat {profilData.username} Post</Button>
                     :
@@ -140,9 +181,13 @@ const Profil = (props) => {
                     <> 
                         <Button className="text-light btn-sm mx-1" variant='warning' onClick={() => setModal({...modal, profil: true})}> Edit Profil</Button>
                         <Button className="text-light btn-sm mx-1" variant='warning' onClick={() => setModal({...modal, password: true})}> Ganti Password</Button>
-                        <Button className="text-light btn-sm mx-1" variant='warning'> Ganti Foto Profil</Button>
+                        <Form className="d-inline">
+                        <label className="text-warning mx-1 my-2 btn btn-sm text-light btn-warning" htmlFor="image-input" style={{ cursor: 'pointer' }} disabled={message.image.disabled} >{message.image.label}</label>
+                        <input name="image" id="image-input" type="file" onChange={imageHandle} style={{ display: 'none' }}/>
+                        </Form>
                     </>
                     }
+                    </Card.Body>
                 </Card.Footer>
 
             </Card>
@@ -154,7 +199,7 @@ const Profil = (props) => {
 
             {/* modal */}
             <ProfilModal datauser={profilData} show={modal.profil} onHide={() => setModal({...modal, profil: false})} />
-
+            <PasswordModal datauser={profilData} show={modal.password} onHide={() => setModal({...modal, password: false})} />
             {/* scroll */}
             <div style={{display: display.post}}>
                 <InfiniteScroll
