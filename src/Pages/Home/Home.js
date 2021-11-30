@@ -79,7 +79,7 @@ export const Home = () => {
                     userDispatch({
                         type: 'SET_USER_DATA', 
                         payload:{
-                            userId: res.data.user[0].id,
+                            userId: res.data.user[0]._id,
                             image: res.data.user[0].image,
                             image_id: res.data.user[0].image_id,
                             nama: res.data.user[0].nama,

@@ -53,6 +53,16 @@ export const UserReducer = {
                     token: action.payload.token || sessionStorage.getItem('userToken')  
                 } 
             }
+
+            case 'NEW_TOKEN': {
+                sessionStorage.removeItem('userToken')
+                sessionStorage.setItem('userToken', JSON.stringify(action.payload.token))
+                return {
+                    ...state,
+                    token: action.payload.token
+                }
+            }
+
             case 'Logout': {
                 localStorage.clear()
                 sessionStorage.removeItem('userToken')

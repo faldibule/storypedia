@@ -6,7 +6,7 @@ import { useForm } from 'react-hook-form'
 import { FormRegistrasi } from '../../Utils/FormRegistrasi'
 
 const PasswordModal = (props) => {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+    const { register, handleSubmit, setValue, watch, formState: { errors } } = useForm();
     const pw = useRef({})
     pw.current = watch('password', '')
     const [display, setDisplay] = useState({
@@ -46,8 +46,9 @@ const PasswordModal = (props) => {
         const dataForm = {
             password: data.old_password,
             newPassword: data.password,
-            userId: props.datauser._id
+            userId: props.datauser.userId
         }
+        console.log(props.datauser);
         setDisplay({
             button: 'none',
             loading: 'block'
@@ -55,6 +56,9 @@ const PasswordModal = (props) => {
         axios.post(`${window.env.API_URL}auth/edit_password`, dataForm)
                 .then(res => {
                     console.log(res.data)
+                    setValue('password', '')
+                    setValue('old_password', '')
+                    setValue('r_password', '')
                     setAlert({
                         isSuccess: {
                             display: 'block',
@@ -110,6 +114,19 @@ const PasswordModal = (props) => {
                     {alert.isError.message}
                 </Alert>
                 <Form onSubmit={handleSubmit(onSubmit)}>
+                <Form.Group className="mb-3" controlId="anjay">
+                        <Form.Label>Password Lama</Form.Label>
+                            <Form.Control
+                                className="rounded-pill"
+                                name='old_password' 
+                                type='password' 
+                                placeholder='Password Lama '
+                                {...register('old_password', {
+                                    required: 'Wajib Diisi!',
+                                })}                                    
+                            />
+                        {errors['old_password'] && <small className="text-danger">{errors['old_password'].message}</small>}
+                    </Form.Group>
                     {FormRegistrasi.map((val, i) => {
                         if(val.name == 'r_password' || val.name == 'password'){
                             if(val.name == 'r_password'){
@@ -159,19 +176,6 @@ const PasswordModal = (props) => {
                             )  
                         }
                     })}
-                    <Form.Group className="mb-3" controlId="anjay">
-                        <Form.Label>Password Lama</Form.Label>
-                            <Form.Control
-                                className="rounded-pill"
-                                name='old_password' 
-                                type='password' 
-                                placeholder='Password Lama '
-                                {...register('old_password', {
-                                    required: 'Wajib Diisi!',
-                                })}                                    
-                            />
-                        {errors['old_password'] && <small className="text-danger">{errors['old_password'].message}</small>}
-                    </Form.Group>
                     <Button variant='warning' className="text-light rounded-pill" type="submit" style={{ display: display.button }}>
                             Submit
                     </Button>

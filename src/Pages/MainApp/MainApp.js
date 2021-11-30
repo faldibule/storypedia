@@ -6,6 +6,7 @@ import { UserContext } from '../../Context/UserContext'
 import { Provider } from '../../Reducer/HomeReducer'
 import Detail from '../Detail/Detail'
 import {Home} from '../Home/Home'
+import NotFoundPage from '../NotFoundPage'
 import Profil from '../Profil/Profil'
 
 
@@ -30,6 +31,8 @@ const MainApp = () => {
                             <Route exact path="/home" component={Home}/>
                             <Route exact path="/home/:username" component={Profil}/>
                             <Route exact path="/home/detail/:uuid" component={Detail}/>
+                            <Route path="*" component={NotFoundPage} />
+
                         </Switch>
                     </Col>
                 </BrowserRouter>

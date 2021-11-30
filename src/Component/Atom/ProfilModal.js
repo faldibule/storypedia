@@ -1,7 +1,8 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Modal, Button, Form, Spinner, Alert } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
+import { UserContext } from '../../Context/UserContext'
 import { FormRegistrasi } from '../../Utils/FormRegistrasi'
 
 const ProfilModal = (props) => {
@@ -10,6 +11,7 @@ const ProfilModal = (props) => {
         button: 'block',
         loading: 'none'
     })
+    const { userDispatch } = useContext(UserContext)
     const [alert, setAlert] = useState({
         isSuccess: {
             display: 'none',
@@ -23,6 +25,7 @@ const ProfilModal = (props) => {
     
 
     const onSubmit = (data) => {
+        console.log(data)
         let isEmailSame = props.datauser.email === data.email
         let isUsernameSame = props.datauser.username === data.username
         setDisplay({
@@ -35,12 +38,23 @@ const ProfilModal = (props) => {
             username: data.username,
             isEmailSame,
             isUsernameSame,
-            userId: props.datauser._id,
+            userId: props.datauser.userId,
             password: data.password
         }
         axios.post(`${window.env.API_URL}auth/edit_profil`, dataForm)
                 .then(res => {
-                    console.log(res.data)
+                    userDispatch({
+                        type: 'EDIT_PROFIL',
+                        payload: {
+                            nama: data.nama,
+                            username: data.username,
+                            email: data.email
+                        }
+                    })
+                    setValue('password', '')
+                    setValue('nama', data.nama)
+                    setValue('username', data.username)
+                    setValue('email', data.email)
                     setAlert({
                         isSuccess: {
                             display: 'block',
@@ -55,9 +69,19 @@ const ProfilModal = (props) => {
                         button: 'block',
                         loading: 'none'
                     })
+                    if(!isUsernameSame){
+                        userDispatch({
+                            type: 'NEW_TOKEN',
+                            payload: {
+                                token: res.data.data.token
+                            }
+                        })
+                        props.history.replace({ pathname: `/home/${data.username}`})
+                    }
                 })
                 .catch(err => {
                     if(err.response){
+                        setValue('password', '')
                         setDisplay({
                             button: 'block',
                             loading: 'none'

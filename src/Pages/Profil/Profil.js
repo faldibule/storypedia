@@ -1,5 +1,5 @@
 import axios from 'axios'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, useRef } from 'react'
 import { Card, Image, Spinner, Button, Form } from 'react-bootstrap'
 import { PersonBoundingBox } from 'react-bootstrap-icons'
 import InfiniteScroll from 'react-infinite-scroll-component'
@@ -11,7 +11,7 @@ import { UserContext } from '../../Context/UserContext'
 import { useHomeDispatch, useTrackedState } from '../../Reducer/HomeReducer'
 
 const Profil = (props) => {
-    const { userState } = useContext(UserContext)
+    const { userState, userDispatch } = useContext(UserContext)
     const homeDispatch = useHomeDispatch()
     const homeState = useTrackedState()
     const [profilData, setProfilData] = useState({})
@@ -22,6 +22,7 @@ const Profil = (props) => {
             disabled: false
         }
     })
+    const [usernameState, setUsernameState] = useState(userState.username)
 
     //modal state
     const [modal, setModal] = useState({
@@ -61,15 +62,19 @@ const Profil = (props) => {
             }
         })
         let mounted = true
-        const username = props.match.params.username
-        if(username){
+        let username = props.match.params.username
+        console.log(userState.username, usernameState)
+        if(userState.username !== usernameState){
+            username = userState.username
+        }
+        if(username !== userState.username){
             axios.post(`${window.env.API_URL}auth/profil`, {
                 username,
             })
             .then(res => {
                 if(mounted){
                     homeDispatch({type: 'REFRESH'})
-                    console.log(res.data)
+                    
                     setProfilData(res.data.user[0])
                 }
 
@@ -77,18 +82,25 @@ const Profil = (props) => {
             .catch(err => {
                 console.log(err.response)
             })
+        }else{
+            if(mounted){
+                homeDispatch({type: 'REFRESH'})
+                console.log()
+                setProfilData(userState)
+            }
         }
         return () => {
             mounted = false
+            console.log('unmounted')
         }
-    }, [props])
+    }, [props, userState.username])
 
     useEffect(() => {
         let mounted = true
         if(homeState.postData.length == 0 && JSON.stringify(profilData) !== '{}'){
             axios.post(`${window.env.API_URL}post/findByUserId`, {
                 page: 1,
-                userId: profilData._id
+                userId: profilData._id || profilData.userId
             })
             .then(res => {
                 if(mounted){
@@ -139,6 +151,13 @@ const Profil = (props) => {
         formData.append('username', profilData.username)
         axios.post(`${window.env.API_URL}auth/edit_foto_profil`, formData)
                 .then(res => {
+                    userDispatch({
+                        type: 'EDIT_FOTO',
+                        payload: {
+                            image: res.data.data.image,
+                            image_id: res.data.data.image
+                        }
+                    })
                     setMessage({
                         image: {
                             label : 'Ganti Foto',
