@@ -43,7 +43,7 @@ const Profil = (props) => {
     const getMoreData = () => {
         axios.post(`${window.env.API_URL}post/findByUserId`, {
             page: homeState.page,
-            userId: profilData._id
+            userId: profilData._id || profilData.userId
         })
         .then(res => {
             if(homeState.page == res.data.posts.totalPage){
