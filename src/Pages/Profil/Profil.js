@@ -1,6 +1,6 @@
 import axios from 'axios'
 import React, { useContext, useEffect, useState, useRef } from 'react'
-import { Card, Image, Spinner, Button, Form } from 'react-bootstrap'
+import { Card, Image, Spinner, Button, Form, Alert } from 'react-bootstrap'
 import { PersonBoundingBox } from 'react-bootstrap-icons'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import { Redirect } from 'react-router'
@@ -20,6 +20,16 @@ const Profil = (props) => {
         image: {
             label : 'Ganti Foto',
             disabled: false
+        }
+    })
+    const [alert, setAlert] = useState({
+        isSuccess: {
+            message: '',
+            display: 'none'
+        },
+        isError: {
+            message: '',
+            display: 'none'
         }
     })
     const [usernameState, setUsernameState] = useState(userState.username)
@@ -164,6 +174,16 @@ const Profil = (props) => {
                             disabled: false
                         }
                     })
+                    setAlert({
+                        isSuccess: {
+                            message: res.data.message,
+                            display: 'block'
+                        },
+                        isError: {
+                            message: '',
+                            display: 'none'
+                        }
+                    })
                     console.log(res.data)
                 })
                 .catch(err => {
@@ -173,7 +193,18 @@ const Profil = (props) => {
                             disabled: false
                         }
                     })
-                    console.log(err.response)
+                    if(err.response){
+                        setAlert({
+                            isSuccess: {
+                                message: '',
+                                display: 'none'
+                            },
+                            isError: {
+                                message: err.response.data.message,
+                                display: 'block'
+                            }
+                        })
+                    }
                 })
     }
     
@@ -190,6 +221,12 @@ const Profil = (props) => {
                 </Card.Header>
                 <Card.Footer className="d-flex justify-content-center">
                     <Card.Body className="text-center">
+                    <Alert variant='danger' style={{ display: alert.isError.display }}>
+                        {alert.isError.message}
+                    </Alert>   
+                    <Alert variant='success' style={{ display: alert.isSuccess.display }}>
+                        {alert.isSuccess.message}
+                    </Alert>   
                     {display.post === 'none' ? 
                         <Button className="text-light btn-sm mx-1" variant='warning' onClick={handleDisplay}> Lihat {profilData.username} Post</Button>
                     :

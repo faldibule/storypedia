@@ -26,7 +26,7 @@ const CardPost = ({val}) => {
     return (
         <Card className="mb-2 p-2 shadow-sm">
             <Card.Header className="d-flex">
-                <Image style={{ width: '50px', objectFit: 'cover', objectPosition: 'center' }} className="rounded-circle me-2" variant="top" src={val.user.image} />
+                <Image style={{ width: '50px', height: '50px', objectFit: 'cover', objectPosition: 'center' }} className="rounded-circle me-2" variant="top" src={val.user.image} />
                 <span>
                     <small>{val.user.nama}</small>
                     <Link className="text-decoration-none" to={{pathname: `/home/${val.user.username}`}}><small className="text-secondary"> @{val.user.username}</small></Link> 
