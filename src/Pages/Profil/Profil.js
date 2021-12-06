@@ -83,7 +83,6 @@ const Profil = (props) => {
             .then(res => {
                 if(mounted){
                     homeDispatch({type: 'REFRESH'})
-                    
                     setProfilData(res.data.user[0])
                 }
 
@@ -210,8 +209,8 @@ const Profil = (props) => {
                 <Card.Header className="text-center d-flex justify-content-center flex-column align-items-center">
                     <Image style={{ width: '120px', height: '120px', objectFit: 'cover', objectPosition: 'center' }} className="img-fluid rounded-circle me-2" variant="top" src={profilData.image} />
                     <span>
-                        <h5>{profilData.username}</h5>
-                        <h5 className="text-secondary">{profilData.email}</h5>
+                        <h5>{profilData.nama}</h5>
+                        <h5 className="text-secondary">{profilData.username}</h5>
                     </span>
                 </Card.Header>
                 <Card.Footer className="d-flex justify-content-center">
