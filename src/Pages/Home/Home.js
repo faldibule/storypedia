@@ -34,19 +34,20 @@ export const Home = () => {
                     }else{
                         homeDispatch({type: 'SET_PAGE'})
                     }
-                    homeDispatch({
-                        type: 'SET_POST_DATA',
-                        payload:{
-                            data1: homeState.postData,
-                            data2: res.data.posts.data
-                        }
-                    })
+                    if(homeState.postData.length > 0){
+                        homeDispatch({
+                            type: 'SET_POST_DATA',
+                            payload:{
+                                data1: homeState.postData,
+                                data2: res.data.posts.data
+                            }
+                        })
+                    }
                 })
                 .catch(err => {
                     console.log(err)
                 })
     }
-
 
     const getData = () =>{
         axios.post(`${window.env.API_URL}post/find`, {
@@ -104,9 +105,9 @@ export const Home = () => {
                 pathname: '/home'
             }
         })
-        if(homeState.postData.length == 0){
+        if(homeState.postData.length === 0){
             axios.post(`${window.env.API_URL}post/find`, {
-                page: 1,
+                page: 0,
             })
             .then(res => {
                 if(mounted){
@@ -238,6 +239,7 @@ export const Home = () => {
                 dataLength={homeState.postData.length}
                 next={getMoreData}
                 hasMore={homeState.more}
+                refreshFunction={() => homeDispatch({type: 'REFRESH'})}
                 loader={
                     <div className="text-center">
                         <Spinner animation="border" variant="warning" size="sm" />

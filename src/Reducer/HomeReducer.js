@@ -13,6 +13,7 @@ export const HomeReducer = {
         switch(action.type){
             case 'REFRESH': {
                 return{
+                    ...state,
                     postData: [],
                     page: 2,
                     more: true,

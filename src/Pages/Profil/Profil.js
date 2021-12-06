@@ -73,7 +73,6 @@ const Profil = (props) => {
         })
         let mounted = true
         let username = props.match.params.username
-        console.log(userState.username, usernameState)
         if(userState.username !== usernameState){
             username = userState.username
         }
@@ -95,13 +94,11 @@ const Profil = (props) => {
         }else{
             if(mounted){
                 homeDispatch({type: 'REFRESH'})
-                console.log()
                 setProfilData(userState)
             }
         }
         return () => {
             mounted = false
-            console.log('unmounted')
         }
     }, [props, userState.username])
 
@@ -114,7 +111,6 @@ const Profil = (props) => {
             })
             .then(res => {
                 if(mounted){
-                    console.log(res.data)
                     homeDispatch({
                         type: 'SET_POST_DATA_FIRST',
                         payload: {
@@ -184,7 +180,6 @@ const Profil = (props) => {
                             display: 'none'
                         }
                     })
-                    console.log(res.data)
                 })
                 .catch(err => {
                     setMessage({
