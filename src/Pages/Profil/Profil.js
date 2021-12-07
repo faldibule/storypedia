@@ -51,13 +51,15 @@ const Profil = (props) => {
             }else{
                 homeDispatch({type: 'SET_PAGE'})
             }
-            homeDispatch({
-                type: 'SET_POST_DATA',
-                payload:{
-                    data1: homeState.postData,
-                    data2: res.data.posts.data
-                }
-            })
+            if(homeState.postData.length > 0){
+                homeDispatch({
+                    type: 'SET_POST_DATA',
+                    payload:{
+                        data1: homeState.postData,
+                        data2: res.data.posts.data
+                    }
+                })
+            }
         })
         .catch(err => {
             console.log(err)
