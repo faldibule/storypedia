@@ -22,7 +22,7 @@ moment.updateLocale('id', {
         yy: "%d y"
     }
 });
-const CardPost = ({val}) => {
+const CardPost = ({val, modalHandler}) => {
     return (
         <Card className="mb-2 p-2 shadow-sm">
             <Card.Header className="d-flex">
@@ -46,11 +46,17 @@ const CardPost = ({val}) => {
                 }
             </Card.Body>
             <Card.Footer>
+                {modalHandler ?
+                <Card.Text className="text-secondary" onClick={modalHandler} style={{cursor: 'pointer'}}>
+                    Comment Here
+                </Card.Text>
+                :
                 <Link className="text-decoration-none text-dark" to={{pathname: `/home/detail/${val._id}${Date.now()}`}}>
                     <Card.Text className="text-secondary">
                         Leave Comment
                     </Card.Text>
                 </Link>
+                }
             </Card.Footer>
         </Card>
     )
