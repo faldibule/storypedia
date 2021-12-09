@@ -217,6 +217,13 @@ const CommentModal = (props) => {
             <br />
             <br />
             <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
 
             </Modal.Body>
             <Modal.Footer>
