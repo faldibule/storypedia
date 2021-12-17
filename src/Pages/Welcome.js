@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import CardWelcome from '../Component/Welcome/CardWelcome'
 import ParallaxComponent from '../Component/Welcome/ParallaxComponent'
-import JumboImg from '../Images/other/2.jpg'
+import JumboImg from '../Images/other/4.jpg'
 import Mid from '../Component/Welcome/Mid'
 import Footer from '../Component/Welcome/Footer'
 
