@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
-import { Flower3, NodePlusFill, PieChartFill, Truck } from "react-bootstrap-icons";
-import CardWelcome from '../Component/Reuse/CardWelcome'
-import ParallaxComponent from '../Component/Reuse/ParallaxComponent'
+import CardWelcome from '../Component/Welcome/CardWelcome'
+import ParallaxComponent from '../Component/Welcome/ParallaxComponent'
 import JumboImg from '../Images/other/2.jpg'
-import MernImg from '../Images/other/mern.jpeg'
+import Mid from '../Component/Welcome/Mid'
+import Footer from '../Component/Welcome/Footer'
 
 const Welcome = () => {
     const [parent, setParent] = useState(null)
@@ -28,17 +28,22 @@ const Welcome = () => {
             </div>
             <br />
             <div className="container px-4 py-5" id="hanging-icons">
-                <h1 className='text-center'>
-                    <span className='text-success'>M </span> 
-                    <span className='text-secondary'>E</span> 
-                    <span className='text-primary'> R </span> 
-                    <span className='text-success'>N </span> 
-                    <span className='text-warning'>    S T A C K</span>
 
-                </h1>
-                
-                <hr />
                 <div className="row">
+                    <Mid />
+                </div>
+
+                <div className="row">
+                    <h1 className='text-center'>
+                        <span className='text-success'>M </span> 
+                        <span className='text-secondary'>E</span> 
+                        <span className='text-primary'> R </span> 
+                        <span className='text-success'>N </span> 
+                        <span className='text-warning'>    S T A C K</span>
+
+                    </h1>
+                    
+                    <hr />
                     <CardWelcome
                         icon={<img src="https://www.vectorlogo.zone/logos/mongodb/mongodb-icon.svg" alt="" />} 
                         title="MongoDB" 
@@ -68,10 +73,9 @@ const Welcome = () => {
             </div>
 
 
-            <div style={{height: 500}}>
-
+            <div>
+                <Footer />
             </div>
-             
         </div>
     )
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Parallax } from 'react-parallax'
+import { Link } from 'react-router-dom'
 
 const ParallaxComponent = (props) => {
     console.log(props)
@@ -22,7 +23,7 @@ const ParallaxComponent = (props) => {
             <div style={{height: 500}}>
                 <div style={styleText}>
                     <p className='text-light display-1'>{props.header}</p>
-                    <p className='text-secondary display-6'>{props.body}</p>
+                    <Link to='/home' className='text-secondary text-decoration-none display-6'>{props.body}</Link>
                 
                 </div>
             </div>
