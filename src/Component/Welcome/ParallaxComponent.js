@@ -14,13 +14,13 @@ const ParallaxComponent = (props) => {
     return (
         <Parallax 
             parent={props.parent}
-            strength={450} 
+            strength={400} 
             bgImage={props.image} 
             bgImageAlt="the cat" 
             style={{width: '100vw', objectFit: 'cover', objectPosition: 'center'}}
             className='img-fluid'
         >
-            <div style={{height: 600}}>
+            <div style={{height: '100vh'}}>
                 <div style={styleText}>
                     <p className='text-light display-1'>{props.header}</p>
                     <Link to='/home' className='text-light text-decoration-none'>{props.body} </Link>

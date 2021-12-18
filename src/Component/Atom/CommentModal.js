@@ -80,9 +80,8 @@ const CommentModal = (props) => {
                 postId: props.datapost
             })
             .then(res => {
-                console.log(res.data)
                 if(mounted){
-                    if(res.data.commentData.data.length == 0){
+                    if(res.data.commentData.data.length === 0 || res.data.commentData.totalPage === 1 ){
                         setMore(false)
                     }
                     setComment({...comment, data: res.data.commentData.data})
@@ -93,11 +92,10 @@ const CommentModal = (props) => {
             })
         }
         return () => mounted = false
-    }, [props])
+    }, [props, comment.data])
 
 
     const onSubmit = (data) => {
-        console.log(data)
         setDisplay({
             button: 'none',
             loading: 'block'
@@ -110,7 +108,6 @@ const CommentModal = (props) => {
         axios.post(`${window.env.API_URL}comment/store`, dataForm)
                 .then(res => {
                     getData()
-                    console.log(res.data)
                     setDisplay({
                         button: 'block',
                         loading: 'none'
@@ -212,6 +209,8 @@ const CommentModal = (props) => {
                     </div>
                 ))}
             </InfiniteScroll>               
+            <br />
+            <br />
             <br />
             <br />
             <br />
