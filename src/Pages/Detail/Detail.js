@@ -20,7 +20,6 @@ const Detail = (props) => {
     useEffect(() => {
         let mounted = true;
         const raw_uuid = props.match.params.uuid;
-        console.log(homeState.pathname)
         const uuid = raw_uuid.substring(0, 24);
         if(uuid){
             axios.post(`${window.env.API_URL}post/detail`, {
