@@ -23,7 +23,9 @@ function App() {
           <Route exact path="/home" component={MainApp} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
-          <Route path="*" component={NotFoundPage} />
+          <Route exact path="/home/:username" component={MainApp}/>
+          <Route exact path="/home/detail/:uuid" component={MainApp}/>
+          <Route path="*" component={MainApp} />
 
         </Switch>
       </UserContext.Provider>
