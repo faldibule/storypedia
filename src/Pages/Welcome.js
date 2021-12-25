@@ -13,7 +13,7 @@ const Welcome = () => {
             const parent = document.querySelector('.x');
             setParent(parent)
         }
-        return () => mounted = false;
+        return () => mounted = false 
     }, [])
 
     return (
