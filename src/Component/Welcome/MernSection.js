@@ -1,6 +1,7 @@
 import React from 'react'
 import MarqueeComponent from './MarqueeComponent'
 const MernSection = () => {
+
     return (
         <div className="row">
             <h1 className='text-center'>
@@ -13,7 +14,7 @@ const MernSection = () => {
             </h1>
             
             <hr />
-            <MarqueeComponent speed={70} />
+            <MarqueeComponent />
         
         </div>
     )

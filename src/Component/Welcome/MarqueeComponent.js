@@ -1,11 +1,20 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Marquee from 'react-fast-marquee'
 import CardWelcome from './CardWelcome'
 
-const MarqueeComponent = ({speed}) => {
+const MarqueeComponent = () => {
+    const [speed, setSpeed] = useState(70)
     const marqueeStyle = {display: 'flex', alignItems: 'top'}
+    const onHover = () =>{
+        console.log(speed)
+        setSpeed(20);
+    }
+    const onLeave = () =>{
+        setSpeed(70);
+    }
     return (
-        <Marquee style={marqueeStyle} pauseOnHover={true} gradient={false} speed={speed}>
+        <div onMouseOver={onHover} onMouseLeave={onLeave}>
+            <Marquee style={marqueeStyle} gradient={false} speed={speed}>
                 <CardWelcome
                     icon={<img src="https://www.vectorlogo.zone/logos/mongodb/mongodb-icon.svg" alt="" />} 
                     title="MongoDB" 
@@ -28,7 +37,9 @@ const MarqueeComponent = ({speed}) => {
                     title="NodeJS" 
                     body="Node.js adalah runtime environment untuk JavaScript yang bersifat open-source dan cross-platform. Dengan Node.js kita dapat menjalankan kode JavaScript di mana pun, tidak hanya terbatas pada lingkungan browser." 
                 />
-            </Marquee>
+        </Marquee>
+        </div>
+        
     )
 }
 
