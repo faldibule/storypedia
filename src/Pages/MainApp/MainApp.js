@@ -8,6 +8,9 @@ import Detail from '../Detail/Detail'
 import {Home} from '../Home/Home'
 import NotFoundPage from '../NotFoundPage'
 import Profil from '../Profil/Profil'
+import Welcome from '../Welcome';
+
+
 
 
 const MainApp = () => {
