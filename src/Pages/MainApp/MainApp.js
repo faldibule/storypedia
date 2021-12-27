@@ -31,10 +31,10 @@ const MainApp = () => {
                     </Col>
                     <Col md={8}>
                         <Switch>
-                            <Route exact path="/home/" component={Home}/>
+                            <Route exact path="/home" component={Home}/>
                             <Route exact path="/home/:username" component={Profil}/>
                             <Route exact path="/home/detail/:uuid" component={Detail}/>
-                            <Route path="*" component={Welcome} />
+                            <Route path="*" component={NotFoundPage} />
 
                         </Switch>
                     </Col>
