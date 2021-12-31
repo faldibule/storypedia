@@ -3,7 +3,7 @@ import Marquee from 'react-fast-marquee'
 import CardWelcome from './CardWelcome'
 
 const MarqueeComponent = () => {
-    const marqueeStyle = {display: 'flex', alignItems: 'top'}
+    const marqueeStyle = {display: 'flex', alignItems: 'top', overflowY: 'hidden'}
     return (
         <Marquee style={marqueeStyle} gradient={false} speed={70} pauseOnHover={true}>
             <CardWelcome

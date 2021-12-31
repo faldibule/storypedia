@@ -4,6 +4,7 @@ import JumboImg from '../Images/other/5.jpg'
 import Mid from '../Component/Welcome/Mid'
 import Footer from '../Component/Welcome/Footer'
 import MernSection from '../Component/Welcome/MernSection'
+import DarkSection from '../Component/Welcome/DarkSection'
 
 const Welcome = () => {
     const [parent, setParent] = useState(null)
@@ -34,7 +35,11 @@ const Welcome = () => {
                 </div>
             </div>
 
-            <div className='mb-3'>
+            <div className='mb-5 container-fluid bg-dark'>
+                <DarkSection />
+            </div>
+
+            <div className='my-5'>
                 <MernSection />
             </div>
 
