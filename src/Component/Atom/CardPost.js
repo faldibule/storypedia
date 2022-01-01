@@ -15,20 +15,20 @@ moment.updateLocale('id', {
     relativeTime : {
         future: "in %s",
         past:   "%s ago",
-        s  : '%d s',
-        ss : '%d s',
-        m:  "%d m",
-        mm: "%d m",
-        h:  "%d h",
-        hh: "%d h",
-        d:  "%d d",
-        dd: "%d d",
-        w:  "%d w",
-        ww: "%d w",
-        M:  "%d m",
-        MM: "%d m",
-        y:  "%d y",
-        yy: "%d y"
+        s  : '%ds',
+        ss : '%ds',
+        m:  "%dm",
+        mm: "%dm",
+        h:  "%dh",
+        hh: "%dh",
+        d:  "%dd",
+        dd: "%dd",
+        w:  "%dw",
+        ww: "%dw",
+        M:  "%dM",
+        MM: "%dM",
+        y:  "%dY",
+        yy: "%dY"
     }
 });
 const CardPost = ({val, modalHandler}) => {
