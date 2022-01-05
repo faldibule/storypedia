@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
-import { Alert, Form, Modal, Spinner, Button } from 'react-bootstrap';
+import { Alert, Form, Modal, Spinner, Button, Card, ListGroup, ListGroupItem } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { UserContext } from '../../Context/UserContext';
@@ -138,7 +138,6 @@ const CommentModal = (props) => {
         <div>
             <Modal
             {...props}
-            size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             >
             <Modal.Header closeButton>
@@ -153,7 +152,39 @@ const CommentModal = (props) => {
                 <Alert variant='danger' dismissible style={{ display: alert.isError.display }}>
                     {alert.isError.message}
                 </Alert>
-                <Form onSubmit={handleSubmit(onSubmit)}>
+                
+                <br />
+                
+                {/* infinite scroll  */}
+                <InfiniteScroll
+                    dataLength={comment.data.length}
+                    next={getMoreData}
+                    hasMore={more}
+                    loader={
+                        <div className="text-center">
+                            <Spinner animation="border" variant="warning" size="sm" />
+                        </div>
+                    }
+                    scrollableTarget="scrollable"
+                    endMessage={
+                        <div style={{ textAlign: 'center' }}>
+                        <b>Anda Sudah Mencapai Dasar Dari Comment! atau Comment Kosong</b>
+                        </div>
+                    }
+                >
+                <Card className="">
+                    <ListGroup variant="flush">
+                        {comment.data.map((val, i) => (
+                            <div className="border-bottom" key={`${val._id}${Date.now().toString()}`}>
+                                <ListGroup.Item className="d-flex">
+                                    <CommentCard val={val} />
+                                </ListGroup.Item>
+                            </div>
+                        ))}
+                    </ListGroup>
+                </Card>
+                </InfiniteScroll>  
+                <Form style={{ position: '-webkit-sticky', position: 'sticky', top: '85%', zIndex: '999' }} onSubmit={handleSubmit(onSubmit)}>
                     <Form.Group className="mb-3" controlId={'x'}>
                             <Form.Control
                                 className="rounded-pill"
@@ -182,33 +213,7 @@ const CommentModal = (props) => {
                         />
                         Loading...
                     </Button>
-                </Form>
-                <br />
-                
-                {/* infinite scroll  */}
-                <InfiniteScroll
-                dataLength={comment.data.length}
-                next={getMoreData}
-                hasMore={more}
-                loader={
-                    <div className="text-center">
-                        <Spinner animation="border" variant="warning" size="sm" />
-                    </div>
-                  }
-                scrollableTarget="scrollable"
-                endMessage={
-                    <div style={{ textAlign: 'center' }}>
-                      <b>Anda Sudah Mencapai Dasar Dari Comment! atau Comment Kosong</b>
-                    </div>
-                  }
-                
-            >
-                {comment.data.map((val, i) => (
-                    <div key={`${val._id}${Date.now().toString()}`}>
-                            <CommentCard val={val} />
-                    </div>
-                ))}
-            </InfiniteScroll>               
+                </Form>             
             <br />
             <br />
             <br />
@@ -217,12 +222,7 @@ const CommentModal = (props) => {
             <br />
             <br />
             <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
+            
 
             </Modal.Body>
             <Modal.Footer>

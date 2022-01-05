@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import ParallaxComponent from '../Component/Welcome/ParallaxComponent'
-import JumboImg from '../Images/other/5.jpg'
+import JumboImg from '../Images/other/4.jpg'
 import Mid from '../Component/Welcome/Mid'
 import Footer from '../Component/Welcome/Footer'
 import MernSection from '../Component/Welcome/MernSection'

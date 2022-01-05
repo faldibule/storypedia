@@ -9,10 +9,10 @@ export const NavbarComponent = () => {
 
     if(userState.isAuth){
         return (
-                <Navbar bg="warning" variant="dark" expand="lg">
+                <Navbar bg="warning" variant="light" expand="lg">
                     <Container>
                         <NavLink className="navbar-brand" to={{ pathname: '/' }}>
-                            Storypedia
+                            <h5 className=''>Storypedia</h5>
                         </NavLink>
                         <Navbar.Toggle aria-controls="basic-navbar-nav" />
                         <Navbar.Collapse id="basic-navbar-nav">
@@ -37,7 +37,7 @@ export const NavbarComponent = () => {
     }
 
     return (
-            <Navbar sticky="top" bg="warning" variant="dark" expand="lg">
+            <Navbar sticky="top" bg="warning" variant="light" expand="lg">
                 <Container>
                     <NavLink className="navbar-brand" to={{ pathname: '/' }}>
                         Storypedia

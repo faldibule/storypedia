@@ -22,8 +22,8 @@ const ParallaxComponent = (props) => {
         >
             <div style={{height: '100vh'}}>
                 <div style={styleText}>
-                    <p className='text-light display-1'>{props.header}</p>
-                    <Link to='/home' className='text-light text-decoration-none'>{props.body} </Link>
+                    <p className='text-dark display-1'>{props.header}</p>
+                    <Link to='/home' className='text-dark text-decoration-none'>{props.body} </Link>
                 
                 </div>
             </div>

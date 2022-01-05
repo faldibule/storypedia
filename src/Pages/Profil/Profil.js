@@ -224,17 +224,17 @@ const Profil = (props) => {
                         {alert.isSuccess.message}
                     </Alert>   
                     {display.post === 'none' ? 
-                        <Button className="text-light btn-sm mx-1" variant='warning' onClick={handleDisplay}> Lihat {profilData.username} Post</Button>
+                        <Button className="text-dark btn-sm mx-1" variant='warning' onClick={handleDisplay}> Lihat {profilData.username} Post</Button>
                     :
-                        <Button className="text-light btn-sm mx-1" variant='warning' onClick={handleDisplay}> Sembunyikan {profilData.username} Post</Button>
+                        <Button className="text-dark btn-sm mx-1" variant='warning' onClick={handleDisplay}> Sembunyikan {profilData.username} Post</Button>
 
                     }
                     {profilData.username === userState.username &&
                     <> 
-                        <Button className="text-light btn-sm mx-1" variant='warning' onClick={() => setModal({...modal, profil: true})}> Edit Profil</Button>
-                        <Button className="text-light btn-sm mx-1" variant='warning' onClick={() => setModal({...modal, password: true})}> Ganti Password</Button>
+                        <Button className="text-dark btn-sm mx-1" variant='warning' onClick={() => setModal({...modal, profil: true})}> Edit Profil</Button>
+                        <Button className="text-dark btn-sm mx-1" variant='warning' onClick={() => setModal({...modal, password: true})}> Ganti Password</Button>
                         <Form className="d-inline">
-                        <label className="text-warning mx-1 my-2 btn btn-sm text-light btn-warning" htmlFor="image-input" style={{ cursor: 'pointer' }} disabled={message.image.disabled} >{message.image.label}</label>
+                        <label className="text-warning mx-1 my-2 btn btn-sm text-dark btn-warning" htmlFor="image-input" style={{ cursor: 'pointer' }} disabled={message.image.disabled} >{message.image.label}</label>
                         <input name="image" id="image-input" type="file" onChange={imageHandle} style={{ display: 'none' }}/>
                         </Form>
                     </>
