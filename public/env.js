@@ -1,3 +1,3 @@
 window.env = {
-  "API_URL": "https://storypediaapi.herokuapp.com/v1/"
+  "API_URL": "https://stroryapi.up.railway.app/v1/"
 };
