@@ -45,7 +45,7 @@ export const Home = () => {
                     }
                 })
                 .catch(err => {
-                    console.log(err)
+                    // console.log(err)
                 })
     }
 
@@ -63,7 +63,7 @@ export const Home = () => {
                 })
             })
             .catch(err => {
-                console.log(err.response)
+                // console.log(err.response)
             })
     }
 
@@ -120,7 +120,7 @@ export const Home = () => {
                 }
             })
             .catch(err => {
-                console.log(err.response)
+                // console.log(err.response)
             })
         }
         return () => { 

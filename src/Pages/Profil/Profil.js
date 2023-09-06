@@ -62,7 +62,7 @@ const Profil = (props) => {
             }
         })
         .catch(err => {
-            console.log(err)
+            // console.log(err)
         })
     }
 
@@ -90,7 +90,7 @@ const Profil = (props) => {
 
             })
             .catch(err => {
-                console.log(err.response)
+                // console.log(err.response)
             })
         }else{
             if(mounted){
@@ -124,7 +124,7 @@ const Profil = (props) => {
                 }
             })
             .catch(err => {
-                console.log(err.response)
+                // console.log(err.response)
             })
         }
         return () => { 
