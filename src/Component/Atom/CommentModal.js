@@ -50,7 +50,7 @@ const CommentModal = (props) => {
                     }
                 })
                 .catch(err => {
-                    console.log(err)
+                    // console.log(err)
                 })
     }
 
@@ -68,7 +68,7 @@ const CommentModal = (props) => {
                 setComment({...comment, data: newData})
             })
             .catch(err => {
-                console.log(err.response)
+                // console.log(err.response)
             })
     }
 
@@ -88,7 +88,7 @@ const CommentModal = (props) => {
                 }
             })
             .catch(err => {
-                console.log(err.response)
+                // console.log(err.response)
             })
         }
         return () => mounted = false

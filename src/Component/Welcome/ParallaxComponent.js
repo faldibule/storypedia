@@ -3,7 +3,6 @@ import { Parallax } from 'react-parallax'
 import { Link } from 'react-router-dom'
 
 const ParallaxComponent = (props) => {
-    console.log(props)
     const styleText = {
         left: '50%',
         top: '50%',

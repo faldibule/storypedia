@@ -25,7 +25,6 @@ const ProfilModal = (props) => {
     
 
     const onSubmit = (data) => {
-        console.log(data)
         let isEmailSame = props.datauser.email === data.email
         let isUsernameSame = props.datauser.username === data.username
         setDisplay({

@@ -48,14 +48,12 @@ const PasswordModal = (props) => {
             newPassword: data.password,
             userId: props.datauser.userId
         }
-        console.log(props.datauser);
         setDisplay({
             button: 'none',
             loading: 'block'
         })
         axios.post(`${window.env.API_URL}auth/edit_password`, dataForm)
                 .then(res => {
-                    console.log(res.data)
                     setValue('password', '')
                     setValue('old_password', '')
                     setValue('r_password', '')
@@ -152,7 +150,7 @@ const PasswordModal = (props) => {
                                 
                                 :
 
-                                <Form.Group className="mb-3" controlId="formBasicEmail" controlId={i}>
+                                <Form.Group className="mb-3" controlId={i}>
                                         <Form.Label>{val.label}</Form.Label>
                                         <InputGroup className="rounded-pill">
                                             <Form.Control

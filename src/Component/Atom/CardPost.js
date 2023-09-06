@@ -54,7 +54,6 @@ const CardPost = ({val, modalHandler}) => {
                 })
                 axios.delete(`${window.env.API_URL}post/delete/${val._id}`)
                         .then(res => {
-                            console.log(res.data)
                             setDisplay({
                                 loading: 'none',
                                 button: 'block'
@@ -63,13 +62,13 @@ const CardPost = ({val, modalHandler}) => {
                             homeDispatch({type: 'REFRESH'});
                         })
                         .catch(err => {
-                            console.log(err.response)
+                            // console.log(err.response)
                         })
               }
             },
             {
               label: 'Yauda deh gajadi',
-              onClick: () => console.log('Asik')
+              onClick: () => console.log('')
             }
           ]
         });
